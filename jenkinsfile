@@ -6,27 +6,28 @@ pipeline {
     }
 
     stages {
-      stage('Build') {
-    steps {
-        script {
-            
-            sh 'npm install --legacy-peer-deps'
-           // sh 'npm run build -- --prod'
-        }
-    }
-}
-
-stage('Build') {
+        stage('Install Dependencies') {
             steps {
-                // Build your Angular application
-                sh 'npm run build'
+                // Install npm dependencies
+                script {
+                    sh 'npm install --legacy-peer-deps'
+                }
             }
         }
-        
+
+        stage('Build Angular App') {
+            steps {
+                // Build your Angular application
+                script {
+                    sh 'npm run build'
+                }
+            }
+        }
+
         stage('Docker Build') {
             steps {
+                // Build the Docker image
                 script {
-                    // Build the Docker image
                     sh 'docker build -t $DOCKER_IMAGE .'
                 }
             }
@@ -34,13 +35,11 @@ stage('Build') {
 
         stage('Docker Push') {
             steps {
+                // Push the Docker image to a container registry
                 script {
-                    // Push the Docker image to a container registry
                     sh 'docker push $DOCKER_IMAGE'
                 }
             }
         }
-        
-        
     }
 }
