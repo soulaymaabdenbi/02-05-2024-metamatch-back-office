@@ -15,14 +15,14 @@ pipeline {
             }
         }
 
-        stage('Build Angular App') {
-            steps {
-                // Build your Angular application
-                script {
-                    sh 'npm run build'
-                }
-            }
-        }
+        // stage('Build Angular App') {
+        //     steps {
+        //         // Build your Angular application
+        //         script {
+        //             sh 'npm run build'
+        //         }
+        //     }
+        // }
 
         stage('Docker Build') {
             steps {
